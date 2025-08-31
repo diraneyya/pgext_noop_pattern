@@ -71,14 +71,14 @@ install_from_cwd() {
     printf "Installing '$PG_EXTENSIONS_DIR/$fn'...\n"
 
     # This is to defeat the hardlinking from before
-    ( rm "$PG_EXTENSIONS_DIR/$fn" && \
-        cat "$fn" | sed '$a\directory='"$(pwd)" > "$PG_EXTENSIONS_DIR/$fn" ) || return -2;
+    ( sudo rm "$PG_EXTENSIONS_DIR/$fn" && \
+        cat "$fn" | sed '$a\directory = '"'$(pwd)'" > "$PG_EXTENSIONS_DIR/$fn" ) || return -2;
 
     # Delete any remnant SQL files in the extensions directory
     if matches=( $(get_sql_files "$PG_EXTENSIONS_DIR/${fn%.control}" 2>/dev/null) ); then 
         for fn in ${matches[@]}; do
             printf '%b%c Deleting file %s...%b\n' '\x1b[2m' '-' "$fn" '\x1b[22m'
-            rm "$fn" || error=$(( error + 1 ))
+            sudo rm "$fn" || error=$(( error + 1 ))
         done
     fi
 
