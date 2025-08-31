@@ -1,0 +1,6 @@
+# pg_fetch_cycle extension
+comment = 'A demonstration of a hot-reloading pattern for SQL extensions'
+default_version = 'noop'
+module_pathname = '$libdir/myext'
+relocatable = true
+requires = ''
